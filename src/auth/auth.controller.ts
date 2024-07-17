@@ -11,7 +11,7 @@ export class AuthController {
     @Public()
     @HttpCode(HttpStatus.OK)
     @ApiTags('Auth')
-    @Post('login')
+    @Post('authorization')
     signIn(@Body() signInDto: CreateAuthDto) {
       return this.authService.signIn(signInDto.username, signInDto.password);
     }
