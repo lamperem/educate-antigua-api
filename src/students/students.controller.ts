@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { CreateCustomStudentDto, CreateStudentDto, UpdateCustomStudentDto, UpdateStudentDto } from './dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -28,7 +28,7 @@ export class StudentsController {
         return this.studentsService.studentInfo(+id);
     }
 
-    @Patch(':id')
+    @Put(':id')
     update(@Param('id') id: string, @Body() updateStudentDto: UpdateCustomStudentDto) {
         return this.studentsService.update(+id, updateStudentDto);
     }
