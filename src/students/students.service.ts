@@ -5,12 +5,16 @@ import { UsersService } from '../users/users.service';
 import { CreateUserDto, UpdateUserDto } from '../users/dto';
 import { PersonsService } from '../persons/persons.service';
 import { CreatePersonDto, UpdatePersonDto } from '../persons/dto';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { EntityManager } from 'typeorm';
 
 
 @Injectable()
 export class StudentsService {
 
     constructor(
+        @InjectEntityManager()
+        private readonly entityManager: EntityManager,
         private readonly studentRepository: StudentRepository,
         private readonly usersService: UsersService,
         private readonly personsService: PersonsService,
@@ -102,5 +106,20 @@ export class StudentsService {
 
     async remove(student_id: number) {
         return await this.studentRepository.remove(student_id);
+    }
+
+    async studentInfo(student_id: number) {
+        const query = `
+            SELECT
+                *
+            FROM
+                students
+                INNER JOIN persons p on p.person_id = students.person_id
+            WHERE
+                student_id = ${student_id}
+        `;
+        const response = await this.entityManager.query(query);
+
+        return response;
     }
 }

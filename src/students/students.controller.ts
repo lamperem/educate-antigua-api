@@ -23,6 +23,11 @@ export class StudentsController {
         return this.studentsService.findOne(+id);
     }
 
+    @Get('info/:id')
+    findOneById(@Param('id') id: string) {
+        return this.studentsService.studentInfo(+id);
+    }
+
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateStudentDto: UpdateCustomStudentDto) {
         return this.studentsService.update(+id, updateStudentDto);
